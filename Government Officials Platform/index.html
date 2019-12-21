@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome </title> 
+    <script>
+        var file_code = "a";
+    </script>       
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-database.js"></script>        
+    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>    
+    <script src="data/firebase_js.js"></script>    
+    <script src="data/government.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .mycard {
+            box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
+            border-radius: 5px;
+            padding:15px;
+            background: #ffffff;
+        }
+  
+    </style>
+</head>
+<body>    
+    <br><br>
+    <div class="before_login">    
+        <br><br>
+        <center>
+            <h2>Government Login</h2>
+        </center>
+        <br><br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>    
+                <div class="col-md-2"></div>    
+                <div class="col-md-4">
+                    <br>
+                    <div class="card">                    
+                        <div class="card-body">
+                            <br>
+                            <div id="err_show1" style="color:red;"></div>
+                            <input type="text" id="login_key" class="form-control" placeholder="Enter your login key"><br>
+                            <button class="btn btn-primary" onclick="login();">Login &raquo;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>    
+            </div>        
+        </div>
+    </div>
+    <div class="container after_login">        
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-sm btn-primary" style="float: right;" onclick="logout();">Logout</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                        <h3>Add New Contractor</h3>
+                        <div id="map" style="border:1px solid #999;position:none !important;height: 500px;width: 100%;"></div>
+                        <br>
+                        <div class="roadStatusShower">                                    
+                            <div class="alert alert-primary" role="alert">
+                                <i class="fa fa-info-circle" style="font-size:16pt;"></i> Drag and drop the red marker to choose a road.
+                            </div>
+                        </div>
+                        <div class="row">                            
+                            <div class="col-md-12">
+                                <hr>
+                                <h4 class="reportForm">Add new contractor here</h4>
+                                <br>
+                                <div class="reportForm mycard">
+                                    <div class="form-group">
+                                        <label for="title"><b>Contractor Name</b></label>
+                                        <input type="text" class="form-control" id="contractor_name" placeholder="Contractor Name">
+                                    </div>                                                             
+                                    <div class="form-group">
+                                        <label for="location"><b>Road Name</b></label>
+                                        <input type="text" class="form-control" id="contractor_roadname" value=" " disabled>
+                                        (The GPS location will be added along with contractor details)
+                                    </div>
+                                    <button class="btn btn-primary" onclick="addcontractor();">Add Contractor &raquo;</button>
+                                </div>
+                            </div>                            
+                        </div>
+            </div>
+            <div class="col-md-7">
+                <h3>All Contractors</h3>
+                <div id="cards">
+                    Loading...
+                </div>
+            </div>
+        </div> 
+        <br>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <center><h3>LeaderBoard</h3></center>
+                <br>
+                <div class="mycard">
+                    <span class="fa fa-circle" style="color:#008800;"></span>&nbsp;<text style="color:#555F78;font-size:9pt;"><b> LIVE LEADERBOARD</b></text>
+                    <hr>
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                            <th scope="col">#Rank</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Total Submissions</th>
+                            <th scope="col">Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard_users">
+                            <tr>
+                            <th scope="row" style="font-size: 15pt;">1
+                                &nbsp;&nbsp;
+                                <span class="fa fa-star checked" style="color:red;"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </th>
+                            <td>Mark</td>
+                            <td>200</td>
+                            <td><b>550</b>
+                            </td>
+                            </tr>                                            
+                        </tbody>
+                    </table>
+                </div>                        
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>        
+    <br><br><br><br>                  
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHC4iI3Z72s1fGv_KBTIdrkvG2RBa-e1s&callback=initMap"></script>
+</body>
+</html>
