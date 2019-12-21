@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome - Login/Sign Up to Continue</title> 
+    <script>
+        var file_code = "a";
+    </script>       
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-database.js"></script>        
+    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
+    <script src="data/firebase_js.js"></script>
+    <script src="data/index_js.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <br><br>
+    <center>
+        <h2>Welcome!</h2>
+    </center>
+    <br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>    
+            <div class="col-md-4">
+                <br>
+                <div class="card">                    
+                    <div class="card-body">
+                        <h5 class="card-title">Login</h5>
+                        <br>
+                        <div id="err_show1" style="color:red;"></div>
+                        <input type="text" id="login_email" class="form-control" placeholder="Email"><br>
+                        <input type="password" id="login_password" class="form-control" placeholder="Password"><br>
+                        <button class="btn btn-primary" onclick="login();">Login &raquo;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <br>
+                <div class="card">                    
+                    <div class="card-body">
+                        <h5 class="card-title">Sign Up</h5>
+                        <br>
+                        <div id="err_show2" style="color:red;"></div>
+                        <!--<input type="text" id="signup_fullname" class="form-control" placeholder="Full Name"><br>-->
+                        <!--<input type="text" id="signup_batch" class="form-control" placeholder="Batch e.g. B.Tech'18"><br>-->
+                        <input type="text" id="signup_email" class="form-control" placeholder="Email"><br>
+                        <input type="password" id="signup_password" class="form-control" placeholder="New Password (Minimum 6 characters)"><br>
+                        <button class="btn btn-success" onclick="signup();">Sign Up &raquo;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>    
+        </div>        
+    </div>
+</body>
+</html>

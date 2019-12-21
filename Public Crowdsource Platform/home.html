@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home - Welcome</title> 
+    <script>
+        var file_code = "b";
+        var user_id = null;
+        var firebaseUser = null;
+        var firebaseUserData = null;
+    </script>       
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="data/home_css.css">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-database.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>              
+    <script src="data/firebase_js.js"></script>
+    <script src="data/home_js.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHC4iI3Z72s1fGv_KBTIdrkvG2RBa-e1s&callback=initMap"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>                          
+    </style>
+</head>
+<body>    
+    <div id="sidnavbtoggle" onclick="showsdnvb()">
+        <i class='fa fa-bars'></i>
+    </div>
+    <div id="sidnavb">
+        
+        <div id="logodiv" style='border-bottom:1px solid #777;'>
+            Roadly <div id="sidnavcloset"  onclick="closdnvb()"><i class="fa fa-close"></i></div>
+            <br><div style="font-family:Arial;font-size:10pt;color:#aaaaaa;">A crowd sourced platform for road surveys</div>
+        </div>        
+        <div id="linsnb" class="linsnb user_id_div"  onclick="clickedlinnb(this);">
+            
+        </div>
+        <div id="linsnb" class="linsnb clickednb"  onclick="clickedlinnb(this);loadinc('homec');">
+            <i class="fa fa-home"></i>&nbsp;&nbsp;Home
+        </div>
+        <div id="linsnb" class="linsnb "  onclick="clickedlinnb(this);loadinc('reportsc');">
+            <i class="fa fa-book"></i>&nbsp;&nbsp;My Reports
+        </div>
+        <div id="linsnb" class="linsnb "  onclick="clickedlinnb(this);loadinc('leaderboardc');">
+            <i class="fa fa-star"></i>&nbsp;&nbsp;Leaderboard
+        </div>
+        <div id="linsnb" class="linsnb"  onclick="clickedlinnb(this);userSignOut();">
+            <i class="fa fa-sign-out"></i>&nbsp;&nbsp;Sign Out
+        </div>                
+    </div>
+    <div id="all_except_side_nav" style="padding:15px;">                        
+        <div class="contafiner">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="homec">
+                        <br><br><br>
+                        <div style="text-align: right;margin-bottom:15px;color:#666;"><b>Drag the red marker to any location within specified circular area to report for a road</b></div>                         
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="map" style="border:1px solid #999;position:none !important;"></div>
+                                <br>
+                                <div class="roadStatusShower">                                    
+                                    <div class="alert alert-primary" role="alert">
+                                        <i class="fa fa-info-circle" style="font-size:16pt;"></i> Drag and drop the red marker to report for an area.
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <hr>
+                                        <h4 class="reportForm">Submit Your Report Here</h4>
+                                        <div id="road_status_div" style="color:#ac3838;"></div>
+                                        <br>
+                                        <div class="reportForm mycard">
+                                            <div class="form-group">
+                                                <label for="title"><b>Problem Title</b></label>
+                                                <select class="form-control" id="report_title">
+                                                  <option value="Cracks or Upheavals">Cracks or Upheavals</option>
+                                                  <option value="Potholes">Potholes</option>
+                                                  <option value="Faded Showings or Missing Markings">Faded Showings or Missing Markings</option>
+                                                  <option value="Damaged Road Railings">Damaged Road Railings</option>
+                                                  <option value="Damaged or Missing Bollards">Damaged or Missing Bollards</option>
+                                                  <option value="Damaged Sign Boards and Marks">Damaged Sign Boards and Marks</option>  
+                                                  <option value="Other">Other</option>                                          
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment"><b>Description</b></label>
+                                                <textarea class="form-control" id="report_des" placeholder="Describe your problem here..."></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="location"><b>Road Name</b></label>
+                                                <input type="text" class="form-control" id="report_roadname" value=" " disabled>
+                                                (The GPS location of the spot will be sent along with report)
+                                            </div>
+                                            <button class="btn btn-primary" onclick="report();">Submit Report &raquo;</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>                                
+                            </div>                                                      
+                        </div>                                            
+                    </div>   
+                    <div id="leaderboardc">    
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3" style="text-align: center;">
+                                <br>
+                                <div class="userProfilePhoto mycard" style=" margin-left: auto;margin-right: auto;border-radius: 100% !important;width: 200px;height: 200px;">
+                                    <div class="userInitalDisplay" style="color:#fff;background-color: #888;border-radius: 100% !important;width: 100%;height: 100%;padding:5px 40px;font-size:85pt;">
+                                    </div>
+                                    <div class="userStarDisplay"  style="background:#fff;padding:1px;border-radius:5px;font-size: 20pt;margin-top:-15px;"></div>    
+                                    <div class="userRatingDisplay"  style="font-size: 20pt;font-weight: bold;margin-top:0px;"></div>
+                                </div>               
+                                <br><br><br>                                                              
+                                <div style="width: 100%;" class="">
+                                    <div class="usertotalReportsCount"></div>            
+                                    <canvas id="barChart"></canvas>
+                                </div>                                     
+                            </div>
+                                                                 
+                            <div class="col-md-9">
+                                <br>
+                                <div class="mycard">
+                                    <span class="fa fa-circle" style="color:#008800;"></span>&nbsp;<text style="color:#555F78;font-size:9pt;"><b> LIVE LEADERBOARD</b></text>
+                                    <hr>
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">#Rank</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Total Submissions</th>
+                                            <th scope="col">Rating</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="leaderboard_users">
+                                            <tr>
+                                            <th scope="row" style="font-size: 15pt;">1
+                                                &nbsp;&nbsp;
+                                                <span class="fa fa-star checked" style="color:red;"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                            </th>
+                                            <td>Mark</td>
+                                            <td>200</td>
+                                            <td><b>550</b>
+                                            </td>
+                                            </tr>                                            
+                                        </tbody>
+                                    </table>
+                                </div>                        
+                            </div>
+                        </div>                        
+                    </div>  
+                    <div id="reportsc">               
+                        <br><br><br>         
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">                                    
+                                    <h2>Track all your reports here</h2>                                                                                                
+                                </div>
+                                <div class="col-md-6 text-right report_status">                                    
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8" id="reports_shower">
+                                    Loading...
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                        </div>
+                    </div>                                   
+                </div>
+            </div>        
+        </div>  
+    </div>        
+    <div id="askFordisplayName">
+        <div id="askFordisplayNameinside">
+            <div style="margin:15px;z-index:99;">
+                Please complete this : 
+                <br><br>
+                <input type="text" class="form-control" placeholder="Full Name" id="displaynameask" maxlength="50"><br>                
+                <button class="btn btn-primary" onclick="setUserInfo()">OK &raquo;</button>
+                <div id="err_show_display_name" style="float:right;margin-top:-25px;"></div>
+            </div>
+        </div>
+    </div>  
+    <div class="modal fade" id="congratsModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="card">
+                <div class="text-right cross"> <i class="fa fa-times"></i> </div>
+                <center><h1 style="font-size: 50pt;color:#F1BC19;" id="increasedRatingDiv"><b></b><br></h1>Rating</center>
+                <div class="card-body text-center" style="color:#777;"> <img src="data/trophy.png">
+                    <h5>CONGRATULATIONS!</h5>
+                    <p>Your earned points. Your rating has increased.</p> <button class="btn btn-danger btn-square continue">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>      
+</body>
+</html>
