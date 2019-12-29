@@ -12,8 +12,7 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
  
 
-function userSignOut(){
-       
+function userSignOut(){       
     $('.before_login').fadeIn(300);
     $('.after_login').hide(); //will pass our actual domain after hosting    
 }

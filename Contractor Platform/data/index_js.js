@@ -6,7 +6,6 @@ $(document).ready(()=>{
     $('.after_login').hide();
     $('.before_login').fadeIn(300);
 });
-
     
 function login() 
 {
@@ -151,6 +150,5 @@ function load_queries(user_id){
             iDiv.innerHTML = make_one_report(doc.data(), doc.id);
             shower.append(iDiv);
         });
-        //console.log("Current cities in CA: ", cities.join(", "));
         });
 }
