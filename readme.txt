@@ -1,5 +1,4 @@
 Inter IIT Coding Hackathon
-
 IIT GANDHINAGAR
 
 Title - Roadly
